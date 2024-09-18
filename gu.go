@@ -10,12 +10,13 @@ import (
 	"time"
 )
 
-const port = ":7983"
+const port = ":50508"
 
 func main() {
 	addrs, err := net.InterfaceAddrs()
 	if err != nil {
 		fmt.Println(err)
+		return
 	}
 	for _, address := range addrs {
 		ipNet, ok := address.(*net.IPNet)
@@ -34,7 +35,7 @@ func main() {
 
 func handleLoopback(ip string) {
 	if ret, err := exist(ip + port); err == nil {
-		fmt.Println(ret + "," + ip)
+		fmt.Println(ret + ":" + ip)
 	}
 }
 
@@ -44,10 +45,11 @@ func handleIpV4(ip string) {
 	wg := &sync.WaitGroup{}
 	for i := 2; i < 255; i++ {
 		ip := ipBase + strconv.Itoa(i)
+		fmt.Println(ip)
 		wg.Add(1)
 		go func() {
 			if msg, err := exist(ip + port); err == nil {
-				fmt.Println(msg + "," + ip)
+				fmt.Println(msg + ":" + ip)
 			}
 			wg.Done()
 		}()

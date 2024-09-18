@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	server := tcp_server.New("localhost:7983")
+	server := tcp_server.New("localhost:" + port)
 	server.OnNewMessage(func(c *tcp_server.Client, message string) {
 		if message == "gu\n" {
 			name, err := os.Hostname()
