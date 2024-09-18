@@ -51,7 +51,7 @@ func handleIpV4(ip string) {
 		wg.Add(1)
 		go func() {
 			if msg, err := exist(ip + ":" + *port); err == nil {
-				fmt.Println(msg + ":" + ip)
+				fmt.Println("gua: " + msg + ":" + ip)
 			}
 			wg.Done()
 		}()
