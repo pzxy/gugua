@@ -2,5 +2,8 @@
 Using TCP, you can find the ip address of another host on the LAN.
 
 ```bash
-go install github.com/pzxy/gugua@latest
+# server
+go install github.com/pzxy/gua@latest
+# client
+go install github.com/pzxy/gu@latest
 ```
