@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"flag"
 	"fmt"
 	"net"
 	"strconv"
@@ -10,9 +11,10 @@ import (
 	"time"
 )
 
-const port = ":50508"
+var port = flag.String("port", "50508", "Hostname of the server")
 
 func main() {
+	flag.Parse()
 	addrs, err := net.InterfaceAddrs()
 	if err != nil {
 		fmt.Println(err)
@@ -34,7 +36,7 @@ func main() {
 }
 
 func handleLoopback(ip string) {
-	if ret, err := exist(ip + port); err == nil {
+	if ret, err := exist(ip + ":" + *port); err == nil {
 		fmt.Println(ret + ":" + ip)
 	}
 }
@@ -48,7 +50,7 @@ func handleIpV4(ip string) {
 		fmt.Println(ip)
 		wg.Add(1)
 		go func() {
-			if msg, err := exist(ip + port); err == nil {
+			if msg, err := exist(ip + ":" + *port); err == nil {
 				fmt.Println(msg + ":" + ip)
 			}
 			wg.Done()
